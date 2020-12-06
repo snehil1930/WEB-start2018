@@ -3,9 +3,7 @@ let btnAdd=$('#btnAdd')
 let btnClear=$('#btnClear')
 let inpNewTask=$('#inpNewTask')
 
-
-
-btnAdd.click(()=>
+function additem()
 {
     let ListItem=$('<li>',
     {
@@ -13,9 +11,24 @@ btnAdd.click(()=>
         text: inpNewTask.val()
         //console.log(text)
     })
+    ListItem.click(()=>
+    {
+        ListItem.toggleClass('done')
+        console.log("hello")
+    })
     ulTask.append(ListItem)
-    console.log(inpNewTask.val())
-})
+   // console.log(inpNewTask.val())
+}
+inpNewTask.keypress((e)=> 
+{  
+    if(e.which==13)
+    additem()
+}
+)
+
+btnAdd.click(additem)
+
+
 btnClear.click(()=> 
 {inpNewTask.val("")
 }
