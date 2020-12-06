@@ -1,8 +1,9 @@
 let ulTask=$('#ulTask')
 let btnAdd=$('#btnAdd')
-let btnClear=$('#btnClear')
+let btnreset=$('#btnreset')
 let inpNewTask=$('#inpNewTask')
-
+let btnCleanup=$('#btnCleanup')
+let btnSort=$('#btnsort')
 function additem()
 {
     let ListItem=$('<li>',
@@ -14,22 +15,58 @@ function additem()
     ListItem.click(()=>
     {
         ListItem.toggleClass('done')
-        console.log("hello")
+        //console.log("hello")
     })
     ulTask.append(ListItem)
+    ToggleButtons()
    // console.log(inpNewTask.val())
 }
+
+function  clearingtask()
+{
+    $('#ulTask li.done').remove()
+    ToggleButtons()
+}
+
+
+function sorting()
+{
+    console.log('sorting')
+    $('#ulTask li.done').appendTo(ulTask)
+}
+
+
+function ToggleButtons()
+{
+     btnreset.prop('disabled',inpNewTask.val()=='')
+     btnAdd.prop('disabled',inpNewTask.val()=='')
+     btnCleanup.prop('disabled',ulTask.children().length<1)
+     btnSort.prop('disabled',ulTask.children().length<1)
+}
+
+
+
 inpNewTask.keypress((e)=> 
 {  
     if(e.which==13)
     additem()
-}
-)
+})
+
+
+inpNewTask.on('input',ToggleButtons)
 
 btnAdd.click(additem)
 
 
-btnClear.click(()=> 
-{inpNewTask.val("")
+btnCleanup.click(clearingtask)
+
+
+btnSort.click(sorting)
+
+
+btnreset.click(()=> 
+{
+    inpNewTask.val("")
+    ToggleButtons()
 }
 )
